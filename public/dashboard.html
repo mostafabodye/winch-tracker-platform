@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة التحكم والتوجيه المباشر | Winch Dispatcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo-icon">🚚</span>
+        <div>
+          <h1>منظومة التتبع وإدارة الأوناش</h1>
+          <p class="subtitle">المطابقة الجغرافية اللحظية ونطاقات التسويق (Geofence)</p>
+        </div>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-pill">
+          <span class="stat-label">الأوناش النشطة:</span>
+          <span class="stat-val text-green" id="activeWinchCount">0</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-label">إجمالي الأسطول:</span>
+          <span class="stat-val" id="totalWinchCount">0</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-label">حالة السيرفر:</span>
+          <span class="stat-val status-badge" id="wsStatus">متصل 🟢</span>
+        </div>
+      </div>
+
+      <div class="actions">
+        <a href="/sos.html" target="_blank" class="btn btn-primary" style="background: #dc2626; color: #fff;">
+          🆘 صفحة العميل العطلان
+        </a>
+        <button class="btn btn-primary" id="btnOpenSimulateModal">
+          🚨 محاكاة طلب إنقاذ
+        </button>
+        <a href="/driver.html" target="_blank" class="btn btn-outline">
+          📱 فتح تطبيق السائق
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="main-content">
+      <!-- Map Container -->
+      <div class="map-wrapper">
+        <div id="map"></div>
+        <div class="map-hint">
+          💡 انقر على أي نقطة بالخريطة لتوجيه ونش إنقاذ لسيارة عطلانة هناك فوراً.
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-tabs">
+          <button class="tab-btn active" data-tab="driversTab">الأوناش (<span id="driverListCount">0</span>)</button>
+          <button class="tab-btn" data-tab="leadsTab">الطلبات</button>
+          <button class="tab-btn" data-tab="adZonesTab">🛡️ نطاقات الإعلانات</button>
+        </div>
+
+        <!-- Drivers Tab Content -->
+        <div class="tab-pane active" id="driversTab">
+          <div class="driver-tools">
+            <button class="btn-sm btn-ghost" id="btnSimulateMovement">
+              🚗 تشغيل محاكاة حركة الأوناش
+            </button>
+            <button class="btn-sm btn-ghost" id="btnResetView">
+              🎯 توسيط الخريطة
+            </button>
+          </div>
+          <div class="driver-list" id="driverList">
+            <!-- Dynamic driver cards inserted here -->
+          </div>
+        </div>
+
+        <!-- Leads Tab Content -->
+        <div class="tab-pane" id="leadsTab">
+          <div class="leads-list" id="leadsList">
+            <div class="empty-state">
+              <span class="empty-icon">📋</span>
+              <p>لا توجد طلبات إنقاذ نشطة حالياً.</p>
+              <small>استخدم زر "محاكاة طلب إنقاذ" أو صفحة العميل لاختبار التوجيه.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ad Zones Tab Content -->
+        <div class="tab-pane" id="adZonesTab">
+          <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 10px; padding: 12px; margin-bottom: 14px;">
+            <h4 style="color: #facc15; font-size: 0.85rem; margin-bottom: 4px;">🛡️ نظام حماية ميزانية الإعلانات التلقائي:</h4>
+            <p style="font-size: 0.75rem; color: #cbd5e1; line-height: 1.4;">
+              تقوم المنصة بإيقاف إعلانات Google فورياً في أي نطاق جغرافي لا يتوفر فيه ونش نشط ومعه رصيد، وتُعيد تشغيلها فور توفر ونش. وبذلك تكون نسبة الهدر المالي = 0%.
+            </p>
+          </div>
+          <div class="ad-zones-list" id="adZonesList" style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Dynamic Ad Zones inserted here -->
+          </div>
+        </div>
+      </aside>
+    </main>
+  </div>
+
+  <!-- Modal: Simulate Customer Lead -->
+  <div class="modal-backdrop" id="simulateModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>🚨 محاكاة طلب إنقاذ سيارة عطلانة</h3>
+        <button class="close-btn" id="btnCloseModal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc">
+          حدد موقع العطل والبيانات لنظام التوجيه لاختيار أقرب ونش أونلاين داخل نطاق الـ Geofence.
+        </p>
+
+        <div class="form-group">
+          <label>اسم العميل / رقم التواصل:</label>
+          <div class="form-row">
+            <input type="text" id="custName" value="أحمد عبد المنعم" placeholder="الاسم">
+            <input type="text" id="custPhone" value="01011223344" placeholder="الموبايل">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>نوع السيارة والعطل:</label>
+          <div class="form-row">
+            <input type="text" id="custVehicle" value="كيا سبورتاج - بنزين" placeholder="نوع العربية">
+            <input type="text" id="custNotes" value="سخونة مفاجئة ودخان من الردياتير" placeholder="وصف العطل">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>إحداثيات موقع العطل (أو اختر من المناطق الجاهزة):</label>
+          <div class="form-row">
+            <input type="number" step="any" id="custLat" value="30.0150" placeholder="خط العرض Lat">
+            <input type="number" step="any" id="custLng" value="31.4100" placeholder="خط الطول Lng">
+          </div>
+          <div class="preset-locations">
+            <button type="button" class="preset-chip" onclick="setPreset(30.0150, 31.4100, 'التجمع الخامس')">📍 التجمع الخامس</button>
+            <button type="button" class="preset-chip" onclick="setPreset(29.9650, 31.2800, 'دائري المعادي')">📍 دائري المعادي</button>
+            <button type="button" class="preset-chip" onclick="setPreset(30.0100, 30.9850, 'محور ٢٦ يوليو')">📍 محور ٢٦ يوليو</button>
+            <button type="button" class="preset-chip" onclick="setPreset(30.0800, 31.3300, 'صلاح سالم / مصر الجديدة')">📍 صلاح سالم</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="btnCancelModal">إلغاء</button>
+        <button class="btn btn-primary" id="btnSubmitDispatch">
+          ⚡ إرسال الطلب ومطابقة أقرب ونش
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

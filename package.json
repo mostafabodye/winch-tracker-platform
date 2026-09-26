@@ -1,0 +1,14 @@
+{
+  "name": "winch-tracker-platform",
+  "version": "1.0.0",
+  "description": "منصة تتبع وتسويق وتوجيه أوناش الإنقاذ - Winch Marketing & Dispatch Platform MVP",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "ws": "^8.17.0"
+  }
+}

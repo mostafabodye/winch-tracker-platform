@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>طوارئ ونش إنقاذ سيارات | أقرب ونش في دقائق</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+    }
+    body {
+      background: #0f172a;
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+    }
+    .sos-container {
+      max-width: 480px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .emergency-header {
+      text-align: center;
+      padding: 16px 0;
+    }
+    .emergency-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 900;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    p.sub {
+      color: #94a3b8;
+      font-size: 0.95rem;
+    }
+    .action-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #cbd5e1;
+      margin-bottom: 6px;
+    }
+    input, select {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #fff;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.95rem;
+    }
+    .btn-sos {
+      width: 100%;
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: #fff;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 1.2rem;
+      font-weight: 900;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
+      transition: all 0.2s;
+    }
+    .btn-sos:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 35px rgba(239, 68, 68, 0.7);
+    }
+    .location-detect-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      color: #38bdf8;
+      margin-bottom: 16px;
+    }
+    /* Matched Driver Result Card */
+    .matched-card {
+      background: #1e293b;
+      border: 2px solid #22c55e;
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+      display: none;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .matched-icon {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+    .matched-title {
+      font-size: 1.3rem;
+      color: #22c55e;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .driver-details-box {
+      background: #0f172a;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: right;
+      margin: 16px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.95rem;
+    }
+    .call-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #22c55e;
+      color: #0f172a;
+      text-decoration: none;
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 1.1rem;
+    }
+    .trust-strip {
+      display: flex;
+      justify-content: space-around;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="sos-container">
+    <header class="emergency-header">
+      <div class="emergency-badge">🚨 خدمة الإنقاذ السريع 24/7</div>
+      <h1>عربيتك عطلانة؟ ونش الإنقاذ عندك في دقائق</h1>
+      <p class="sub">نحدد موقعك تلقائياً ونوجه أقرب ونش أونلاين على الطريق الآن</p>
+    </header>
+
+    <!-- Request Form -->
+    <div class="action-card" id="requestCard">
+      <div class="location-detect-row" id="gpsRow">
+        <span>📍</span>
+        <span id="gpsText">جاري تحديد موقعك التلقائي عبر الـ GPS...</span>
+      </div>
+
+      <div class="form-group">
+        <label>رقم موبايلك (للتواصل مع الونش):</label>
+        <input type="tel" id="clientPhone" placeholder="مثال: 01012345678" required>
+      </div>
+
+      <div class="form-group">
+        <label>اسمك الكريم:</label>
+        <input type="text" id="clientName" placeholder="مثال: محمد علي" value="عميل طوارئ">
+      </div>
+
+      <div class="form-group">
+        <label>نوع السيارة ومكان العطل:</label>
+        <select id="clientZone">
+          <option value="tagamoa">التجمع الخامس ومحور المشير</option>
+          <option value="maadi">الطريق الدائري والمعادي</option>
+          <option value="october">٦ أكتوبر والشيخ زايد ومحور ٢٦ يوليو</option>
+          <option value="heliopolis">مصر الجديدة ومدينة نصر وطريق السويس</option>
+          <option value="giza">الجيزة والهرم وميدان الرماية</option>
+        </select>
+      </div>
+
+      <button class="btn-sos" id="btnRequestWinch">
+        <span>🚨</span>
+        <span>اطلب أقرب ونش لموقعي الآن</span>
+      </button>
+
+      <div class="trust-strip">
+        <span>⚡ وصول خلال 10-20 دقيقة</span>
+        <span>🛡️ ونش هيدروليك مأمن</span>
+        <span>💵 أفضل سعر ثابت للنقلة</span>
+      </div>
+    </div>
+
+    <!-- Result / Confirmation Card -->
+    <div class="matched-card" id="matchedCard">
+      <div class="matched-icon">🚚💨</div>
+      <h2 class="matched-title">تم توجيه الونش لموقعك بنجاح!</h2>
+      <p style="color: #cbd5e1; font-size: 0.9rem;">الونش تحرك الآن وهو في طريقه إليك</p>
+
+      <div class="driver-details-box">
+        <div>اسم السائق: <b id="matchedDriverName" style="color: #fff;">--</b></div>
+        <div>رقم اللوحة: <b id="matchedDriverPlate" style="color: #facc15;">--</b></div>
+        <div>المسافة عنك: <b id="matchedDistance" style="color: #38bdf8;">--</b></div>
+        <div>الوقت المقدر للوصول: <b id="matchedETA" style="color: #22c55e;">--</b></div>
+      </div>
+
+      <a href="#" class="call-btn" id="callDriverLink">
+        <span>📞</span>
+        <span>اتصال مباشر بالسائق الآن</span>
+      </a>
+
+      <p style="color: #64748b; font-size: 0.75rem; margin-top: 12px;">
+        تم تأكيد الطلب وحفظ موقعك الجغرافي لدى السائق.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    let userLat = 30.0131;
+    let userLng = 31.4289;
+
+    // Auto detect user GPS if allowed
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          userLat = pos.coords.latitude;
+          userLng = pos.coords.longitude;
+          document.getElementById('gpsText').textContent = '✅ تم تحديد موقعك الجغرافي بنجاح وبدقة عالية.';
+        },
+        (err) => {
+          document.getElementById('gpsText').textContent = '📍 تم تحديد المنطقة التقريبية (يمكنك تأكيدها من القائمة).';
+        }
+      );
+    }
+
+    // Zone coordinates fallback
+    const zoneCoords = {
+      tagamoa: { lat: 30.0131, lng: 31.4289 },
+      maadi: { lat: 29.9602, lng: 31.2569 },
+      october: { lat: 30.0074, lng: 30.9733 },
+      heliopolis: { lat: 30.0871, lng: 31.3325 },
+      giza: { lat: 29.9870, lng: 31.1500 }
+    };
+
+    document.getElementById('btnRequestWinch').onclick = () => {
+      const phone = document.getElementById('clientPhone').value.trim();
+      const name = document.getElementById('clientName').value.trim() || 'عميل الطريق';
+      const zone = document.getElementById('clientZone').value;
+
+      if (!phone) {
+        alert('من فضلك اكتب رقم تليفونك ليتواصل معك سائق الونش فوراً.');
+        document.getElementById('clientPhone').focus();
+        return;
+      }
+
+      // If coords not updated by GPS, use zone default
+      const coords = zoneCoords[zone] || { lat: 30.0444, lng: 31.2357 };
+      const finalLat = userLat || coords.lat;
+      const finalLng = userLng || coords.lng;
+
+      const btn = document.getElementById('btnRequestWinch');
+      btn.innerHTML = 'جاري البحث عن أقرب ونش أونلاين... ⏳';
+      btn.disabled = true;
+
+      fetch('/api/dispatch/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: name,
+          customerPhone: phone,
+          customerLat: finalLat,
+          customerLng: finalLng,
+          vehicleType: 'سيارة ملاكي',
+          notes: 'طلب عاجل من صفحة الطوارئ'
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.lead && data.lead.bestMatch) {
+          const match = data.lead.bestMatch;
+          document.getElementById('requestCard').style.display = 'none';
+          document.getElementById('matchedCard').style.display = 'block';
+
+          document.getElementById('matchedDriverName').textContent = match.driverName;
+          document.getElementById('matchedDriverPlate').textContent = match.driverPlate || 'ونش معتمد';
+          document.getElementById('matchedDistance').textContent = `${match.distance} كم`;
+          document.getElementById('matchedETA').textContent = `${match.estimatedTime} دقيقة`;
+
+          const callLink = document.getElementById('callDriverLink');
+          callLink.href = `tel:${match.driverPhone || '01012345678'}`;
+          callLink.innerHTML = `<span>📞</span><span>اتصال بالسائق (${match.driverPhone})</span>`;
+        } else {
+          alert('عذراً، لا يوجد ونش متصل حالياً في هذا النطاق، يرجى الاتصال بالخط الساخن.');
+          btn.innerHTML = '🚨 اطلب أقرب ونش لموقعي الآن';
+          btn.disabled = false;
+        }
+      })
+      .catch(err => {
+        alert('حدث خطأ في الاتصال، يرجى المحاولة ثانية.');
+        btn.disabled = false;
+      });
+    };
+  </script>
+</body>
+</html>
