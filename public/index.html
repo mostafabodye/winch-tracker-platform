@@ -3,176 +3,206 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>WinchGo | منصة أوناش الإنقاذ الذكية</title>
+  <title>WinchGo مصر | تطبيق واحد، العديد من خدمات الإنقاذ</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --id-lime: #c8f000;
-      --id-lime-hover: #b4db00;
-      --id-dark: #141414;
-      --id-darker: #0a0a0a;
-      --id-card-bg: #1f1f1f;
-      --id-card-hover: #292929;
-      --id-text: #ffffff;
-      --id-text-muted: #999999;
-      --id-border: #2e2e2e;
+      --id-green: #c8f000;
+      --id-green-hover: #b5dc00;
+      --id-dark: #121212;
+      --id-dark-card: #1c1c1e;
+      --id-bg: #f7f7f2;
+      --id-bg-card: #ffffff;
+      --id-text-main: #111111;
+      --id-text-muted: #666666;
+      --id-pill-bg: #ebebe5;
+      --id-border: #e2e2da;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Cairo', 'Inter', sans-serif;
-      transition: all 0.2s ease-in-out;
+      font-family: 'Cairo', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      transition: all 0.2s ease;
     }
 
     body {
-      background-color: var(--id-darker);
-      color: var(--id-text);
+      background-color: var(--id-bg);
+      color: var(--id-text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
     }
 
-    /* Top Navigation Bar (inDrive Style) */
-    .navbar {
+    /* inDrive Authentic Header */
+    .header-nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 40px;
-      background: var(--id-darker);
+      padding: 18px 48px;
+      background: #ffffff;
       border-bottom: 1px solid var(--id-border);
       position: sticky;
       top: 0;
       z-index: 1000;
     }
 
-    .brand {
+    .brand-logo-wrap {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       text-decoration: none;
     }
 
-    .brand-badge {
-      background: var(--id-lime);
+    .logo-symbol {
+      background: var(--id-green);
       color: #000;
       font-weight: 900;
-      font-size: 1.1rem;
-      width: 40px;
-      height: 40px;
+      font-size: 1.15rem;
+      width: 42px;
+      height: 42px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 15px rgba(200, 240, 0, 0.4);
+      letter-spacing: -0.5px;
     }
 
-    .brand-name {
-      font-size: 1.6rem;
+    .logo-text {
+      font-size: 1.8rem;
       font-weight: 900;
-      letter-spacing: -0.5px;
-      color: #fff;
+      color: #111;
+      letter-spacing: -1px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .nav-links a:hover {
+      color: #000;
     }
 
     .nav-actions {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
 
-    .lang-selector {
+    .flag-btn {
       display: flex;
       align-items: center;
       gap: 6px;
-      background: transparent;
-      border: 1px solid var(--id-border);
-      color: #fff;
+      background: #f0f0eb;
+      border: none;
       padding: 8px 16px;
       border-radius: 9999px;
-      font-size: 0.85rem;
       font-weight: 700;
+      font-size: 0.85rem;
       cursor: pointer;
     }
-    .lang-selector:hover {
-      border-color: #555;
+    .flag-btn:hover {
+      background: #e2e2da;
     }
 
-    .btn-nav-cta {
-      background: var(--id-lime);
+    .btn-download-app {
+      background: var(--id-green);
       color: #000;
       text-decoration: none;
-      font-weight: 800;
-      font-size: 0.9rem;
-      padding: 10px 22px;
+      padding: 10px 24px;
       border-radius: 9999px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      box-shadow: 0 4px 15px rgba(200, 240, 0, 0.4);
     }
-    .btn-nav-cta:hover {
-      background: var(--id-lime-hover);
-      box-shadow: 0 0 20px rgba(200, 240, 0, 0.5);
+    .btn-download-app:hover {
+      background: var(--id-green-hover);
     }
 
-    /* Hero Banner (inDrive Showcase) */
-    .hero-container {
-      max-width: 1200px;
-      margin: 20px auto 0;
-      padding: 0 20px;
+    /* Hero Showcase with inDrive Floating Tabs */
+    .hero-wrapper {
+      max-width: 1240px;
       width: 100%;
+      margin: 24px auto 0;
+      padding: 0 24px;
     }
 
-    .hero-banner-card {
+    .hero-media-box {
       position: relative;
-      border-radius: 32px;
+      border-radius: 36px;
       overflow: hidden;
-      border: 1px solid var(--id-border);
-      height: 440px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      height: 480px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      background: #000;
     }
 
-    .hero-bg-img {
+    .hero-img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      filter: brightness(0.85);
     }
 
-    .hero-overlay {
+    .hero-float-cta {
       position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(10,10,10,0.95) 100%);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 40px;
+      top: 30px;
+      left: 36px;
+      background: var(--id-green);
+      color: #000;
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 16px;
+      font-weight: 900;
+      font-size: 1.15rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      z-index: 10;
+    }
+    .hero-float-cta:hover {
+      background: var(--id-green-hover);
+      transform: scale(1.03);
+    }
+    html[dir="ltr"] .hero-float-cta {
+      left: auto;
+      right: 36px;
     }
 
-    /* Service Selector Tabs (inDrive Style: رحلة - شحن - توصيل) */
-    .service-tabs-wrapper {
+    /* inDrive Tabs Bar (رحلة - توصيل - شحن - أبطال) */
+    .hero-tabs-bar {
       position: absolute;
       bottom: 24px;
-      left: 32px;
-      right: 32px;
-      display: flex;
-      background: rgba(20, 20, 20, 0.85);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      left: 24px;
+      right: 24px;
+      background: rgba(18, 18, 18, 0.88);
+      backdrop-filter: blur(20px);
       border-radius: 20px;
-      padding: 6px;
+      padding: 8px;
+      display: flex;
       gap: 6px;
       overflow-x: auto;
+      border: 1px solid rgba(255, 255, 255, 0.15);
     }
 
-    .service-tab {
+    .h-tab {
       flex: 1;
-      padding: 12px 16px;
+      padding: 12px 18px;
       border-radius: 14px;
       text-align: center;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 700;
-      color: #bbb;
+      color: #aaa;
       background: transparent;
       border: none;
       cursor: pointer;
@@ -182,148 +212,132 @@
       gap: 8px;
       white-space: nowrap;
     }
-
-    .service-tab:hover {
+    .h-tab:hover {
       color: #fff;
-      background: rgba(255, 255, 255, 0.05);
     }
-
-    .service-tab.active {
-      background: var(--id-lime);
+    .h-tab.active {
+      background: var(--id-green);
       color: #000;
       font-weight: 900;
-      box-shadow: 0 4px 15px rgba(200, 240, 0, 0.3);
     }
 
-    /* Headline Section (inDrive Style: تطبيق واحد، العديد من الخدمات) */
-    .headline-section {
+    /* inDrive Headline Section */
+    .headline-wrap {
       text-align: center;
-      padding: 50px 20px 30px;
+      padding: 60px 24px 30px;
       max-width: 900px;
       margin: 0 auto;
     }
 
-    .pill-badge {
+    .app-pill {
       display: inline-block;
-      background: rgba(200, 240, 0, 0.15);
-      border: 1px solid rgba(200, 240, 0, 0.3);
-      color: var(--id-lime);
-      padding: 6px 18px;
+      background: var(--id-pill-bg);
+      color: #333;
+      padding: 6px 20px;
       border-radius: 9999px;
-      font-size: 0.85rem;
-      font-weight: 800;
+      font-size: 0.9rem;
+      font-weight: 700;
       margin-bottom: 20px;
     }
 
-    .headline-title {
-      font-size: 3.2rem;
+    .main-headline {
+      font-size: 3.4rem;
       font-weight: 900;
+      color: #000;
       line-height: 1.2;
       margin-bottom: 16px;
       letter-spacing: -1px;
     }
 
-    .headline-desc {
+    .sub-headline {
       color: var(--id-text-muted);
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       line-height: 1.7;
     }
 
-    /* Dual Portals (inDrive High-Contrast Cards) */
-    .portal-grid {
-      max-width: 1200px;
-      margin: 20px auto 60px;
-      padding: 0 20px;
+    /* Dual Portals (inDrive Cards) */
+    .cards-section {
+      max-width: 1240px;
+      width: 100%;
+      margin: 20px auto 70px;
+      padding: 0 24px;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 28px;
     }
 
-    .portal-card {
-      background: var(--id-card-bg);
+    .card-item {
+      background: #ffffff;
       border: 1px solid var(--id-border);
-      border-radius: 28px;
-      padding: 36px 32px;
+      border-radius: 32px;
+      padding: 44px 36px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       text-decoration: none;
       color: inherit;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
       position: relative;
     }
-
-    .portal-card:hover {
-      background: var(--id-card-hover);
-      border-color: #555;
-      transform: translateY(-4px);
+    .card-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+      border-color: #bbb;
     }
 
-    .portal-card.client:hover {
-      border-color: var(--id-lime);
-      box-shadow: 0 20px 40px -15px rgba(200, 240, 0, 0.25);
-    }
-
-    .portal-card.driver:hover {
-      border-color: #3b82f6;
-      box-shadow: 0 20px 40px -15px rgba(59, 130, 246, 0.25);
-    }
-
-    .card-top {
+    .card-badge-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-bottom: 24px;
     }
 
-    .card-icon {
+    .card-emoji {
       font-size: 2.8rem;
-      background: #141414;
-      width: 64px;
-      height: 64px;
-      border-radius: 18px;
+      background: #f7f7f2;
+      width: 68px;
+      height: 68px;
+      border-radius: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 1px solid #2e2e2e;
     }
 
-    .card-arrow {
-      background: #2e2e2e;
-      color: #fff;
-      width: 44px;
-      height: 44px;
+    .card-arrow-circle {
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
+      background: #f0f0eb;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
-      font-weight: 800;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #111;
     }
-
-    .portal-card:hover .card-arrow {
-      background: var(--id-lime);
-      color: #000;
+    .card-item:hover .card-arrow-circle {
+      background: var(--id-green);
       transform: scale(1.1);
     }
 
-    .card-title {
-      font-size: 1.8rem;
+    .card-heading {
+      font-size: 1.9rem;
       font-weight: 800;
-      margin-bottom: 12px;
-      color: #fff;
+      color: #111;
+      margin-bottom: 14px;
     }
 
-    .card-desc {
+    .card-body-text {
       color: var(--id-text-muted);
-      font-size: 1rem;
-      line-height: 1.6;
-      margin-bottom: 28px;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 32px;
     }
 
-    .card-btn {
-      padding: 16px;
-      border-radius: 16px;
-      font-size: 1.1rem;
+    .card-action-btn {
+      padding: 18px;
+      border-radius: 20px;
+      font-size: 1.15rem;
       font-weight: 900;
       text-align: center;
       display: flex;
@@ -332,102 +346,148 @@
       gap: 10px;
     }
 
-    .btn-lime {
-      background: var(--id-lime);
+    .btn-green-main {
+      background: var(--id-green);
       color: #000;
     }
-    .btn-lime:hover {
-      background: var(--id-lime-hover);
+    .btn-green-main:hover {
+      background: var(--id-green-hover);
     }
 
-    .btn-white {
-      background: #fff;
-      color: #000;
+    .btn-dark-main {
+      background: #111111;
+      color: #fff;
     }
-    .btn-white:hover {
-      background: #e5e5e5;
-    }
-
-    /* Trust & Fair Price Banner (inDrive philosophy) */
-    .trust-container {
-      max-width: 1200px;
-      margin: 0 auto 60px;
-      padding: 0 20px;
-      width: 100%;
+    .btn-dark-main:hover {
+      background: #252525;
     }
 
-    .trust-box {
-      background: #181818;
-      border: 1px solid var(--id-border);
-      border-radius: 24px;
-      padding: 30px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 24px;
-      text-align: center;
-    }
-
-    .trust-stat {
-      font-size: 2rem;
-      font-weight: 900;
-      color: var(--id-lime);
-      margin-bottom: 4px;
-    }
-
-    .trust-label {
-      color: var(--id-text-muted);
-      font-size: 0.9rem;
-    }
-
-    /* Footer */
-    .footer {
-      margin-top: auto;
+    /* inDrive Cities Coverage Strip */
+    .cities-strip {
+      background: #ffffff;
       border-top: 1px solid var(--id-border);
-      padding: 32px 20px;
-      background: #080808;
+      border-bottom: 1px solid var(--id-border);
+      padding: 50px 24px;
+      margin-bottom: 60px;
+    }
+
+    .cities-container {
+      max-width: 1240px;
+      margin: 0 auto;
       text-align: center;
-      font-size: 0.85rem;
-      color: #737373;
     }
 
-    .footer-links {
+    .cities-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 24px;
+    }
+
+    .city-chips-grid {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
-      gap: 24px;
-      margin-bottom: 16px;
+      gap: 12px;
     }
 
-    .footer-links a {
-      color: #999;
+    .city-chip {
+      background: #f7f7f2;
+      border: 1px solid var(--id-border);
+      padding: 10px 22px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #333;
+    }
+    .city-chip:hover {
+      background: var(--id-green);
+      color: #000;
+      border-color: var(--id-green);
+      cursor: pointer;
+    }
+
+    /* Footer (inDrive Style) */
+    .main-footer {
+      background: #111111;
+      color: #fff;
+      padding: 50px 24px 30px;
+      margin-top: auto;
+    }
+
+    .footer-inner {
+      max-width: 1240px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding-bottom: 30px;
+      border-bottom: 1px solid #282828;
+    }
+
+    .footer-links-list {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-links-list a {
+      color: #aaa;
       text-decoration: none;
       font-weight: 600;
+      font-size: 0.95rem;
     }
-    .footer-links a:hover {
-      color: var(--id-lime);
+    .footer-links-list a:hover {
+      color: var(--id-green);
     }
 
-    @media (max-width: 768px) {
-      .navbar {
+    .footer-bottom-row {
+      max-width: 1240px;
+      margin: 24px auto 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+      color: #666;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    @media (max-width: 850px) {
+      .header-nav {
         padding: 14px 20px;
       }
-      .headline-title {
-        font-size: 2.2rem;
+      .nav-links {
+        display: none;
       }
-      .hero-banner-card {
-        height: 260px;
-        border-radius: 22px;
+      .main-headline {
+        font-size: 2.3rem;
       }
-      .service-tabs-wrapper {
+      .hero-media-box {
+        height: 280px;
+        border-radius: 24px;
+      }
+      .hero-float-cta {
+        top: 18px;
+        left: 20px;
+        padding: 10px 20px;
+        font-size: 0.95rem;
+      }
+      html[dir="ltr"] .hero-float-cta {
+        right: 20px;
+        left: auto;
+      }
+      .hero-tabs-bar {
         bottom: 12px;
         left: 12px;
         right: 12px;
-        padding: 4px;
       }
-      .service-tab {
-        padding: 8px 10px;
-        font-size: 0.75rem;
+      .h-tab {
+        padding: 8px 12px;
+        font-size: 0.78rem;
       }
-      .portal-grid {
+      .cards-section {
         grid-template-columns: 1fr;
       }
     }
@@ -435,126 +495,140 @@
 </head>
 <body>
 
-  <!-- Top Navigation (inDrive Style) -->
-  <nav class="navbar">
-    <a href="/" class="brand">
-      <div class="brand-badge">wG</div>
-      <span class="brand-name">WinchGo</span>
+  <!-- inDrive Header Navigation -->
+  <header class="header-nav">
+    <a href="/" class="brand-logo-wrap">
+      <div class="logo-symbol">wG</div>
+      <span class="logo-text">WinchGo</span>
     </a>
 
+    <ul class="nav-links">
+      <li><a href="/sos.html" id="navServices">خدمات عادلة</a></li>
+      <li><a href="/driver.html" id="navEarn">اربحوا مع WinchGo</a></li>
+      <li><a href="/dashboard.html" id="navFleet">لوحة الأسطول</a></li>
+      <li><a href="#cities" id="navCities">المدن والمحاور</a></li>
+    </ul>
+
     <div class="nav-actions">
-      <button class="lang-selector" id="langBtn" onclick="toggleLanguage()">
+      <button class="flag-btn" id="langBtn" onclick="toggleLanguage()">
         <span id="langFlag">🇪🇬</span>
-        <span id="langText">Ar</span>
+        <span id="langCode">Ar</span>
       </button>
-      <a href="/sos.html" class="btn-nav-cta" id="navOrderBtn">طلب ونش فوري</a>
-    </div>
-  </nav>
-
-  <!-- Hero Tow Truck Showcase Banner -->
-  <header class="hero-container">
-    <div class="hero-banner-card">
-      <img src="/images/winch_hero_banner.jpg" alt="WinchGo Heavy Duty Tow Truck" class="hero-bg-img">
-
-      <!-- inDrive Tabbed Service Bar inside Hero -->
-      <div class="service-tabs-wrapper">
-        <button class="service-tab active" onclick="selectTab(this, 'hydraulic')">
-          <span>🚚</span>
-          <span id="tabHydraulic">ونش هيدروليك سريع</span>
-        </button>
-        <button class="service-tab" onclick="selectTab(this, 'fork')">
-          <span>🏗️</span>
-          <span id="tabFork">ونش شوكة للجراجات</span>
-        </button>
-        <button class="service-tab" onclick="selectTab(this, 'heavy')">
-          <span>🚛</span>
-          <span id="tabHeavy">نقل ثقيل وتريلات</span>
-        </button>
-        <button class="service-tab" onclick="selectTab(this, 'sos')">
-          <span>🔋</span>
-          <span id="tabSos">طوارئ بطارية وكاوتش</span>
-        </button>
-      </div>
+      <a href="/sos.html" class="btn-download-app" id="navCtaBtn">احصلوا على الونش</a>
     </div>
   </header>
 
-  <!-- inDrive Style Headline: تطبيق واحد، العديد من الخدمات -->
-  <section class="headline-section">
-    <div class="pill-badge" id="badgePill">منصة WinchGo الذكية</div>
-    <h1 class="headline-title" id="headlineMain">تطبيق واحد، إنقاذ فوري على كل الطرق</h1>
-    <p class="headline-desc" id="headlineSub">
-      أسرع شبكة أوناش إنقاذ مرخصة في مصر. نحدد موقعك بالـ GPS ونوجه لك أقرب ونش أونلاين في محيطك فوراً بأسعار عادلة وبدون وسيط.
+  <!-- Hero Tow Truck Showcase (inDrive Style with Floating Button & Tabs) -->
+  <main class="hero-wrapper">
+    <div class="hero-media-box">
+      <img src="/images/winch_hero_banner.jpg" alt="WinchGo Heavy Duty Tow Truck" class="hero-img">
+
+      <!-- Floating Lime Button like inDrive "تحقق منها جميعًا" -->
+      <a href="/sos.html" class="hero-float-cta" id="heroFloatBtn">تحقق منها جميعًا &larr;</a>
+
+      <!-- inDrive Floating Service Switcher Tabs -->
+      <div class="hero-tabs-bar">
+        <button class="h-tab active" onclick="setServiceTab(this)">
+          <span>🚚</span>
+          <span id="tab1">ونش هيدروليك سريع</span>
+        </button>
+        <button class="h-tab" onclick="setServiceTab(this)">
+          <span>🏗️</span>
+          <span id="tab2">ونش شوكة للجراجات</span>
+        </button>
+        <button class="h-tab" onclick="setServiceTab(this)">
+          <span>🚛</span>
+          <span id="tab3">نقل ثقيل وسفر</span>
+        </button>
+        <button class="h-tab" onclick="setServiceTab(this)">
+          <span>🔋</span>
+          <span id="tab4">طوارئ بطارية وكاوتش</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Headline Section: تطبيق واحد، العديد من الخدمات -->
+  <section class="headline-wrap">
+    <div class="app-pill" id="badgePill">تطبيق WinchGo</div>
+    <h1 class="main-headline" id="mainTitle">تطبيق واحد، العديد من الخدمات</h1>
+    <p class="sub-headline" id="mainSub">
+      طريقة سلسة لحجز ونش الإنقاذ الأقرب إليك على الطرق السريعة وداخل المدن، وفرصة ذهبية للسائقين وأصحاب الأوناش لكسب المال بشروط عادلة ومباشرة.
     </p>
   </section>
 
   <!-- Dual Portals (Customer vs Driver Partner) -->
-  <main class="portal-grid">
-    <!-- Client Card -->
-    <a href="/sos.html" class="portal-card client">
+  <section class="cards-section">
+    <!-- Card 1: Rider / Customer -->
+    <a href="/sos.html" class="card-item">
       <div>
-        <div class="card-top">
-          <div class="card-icon">🚨</div>
-          <div class="card-arrow">&larr;</div>
+        <div class="card-badge-row">
+          <div class="card-emoji">🚨</div>
+          <div class="card-arrow-circle">&larr;</div>
         </div>
-        <h2 class="card-title" id="clientCardTitle">طلب ونش إنقاذ (عربيتك عطلانة؟)</h2>
-        <p class="card-desc" id="clientCardDesc">
-          اطلب أقرب ونش لموقعك فوراً بخريطة الـ GPS الحية. وصول سريع خلال 10-15 دقيقة، بدون تحميل برامج، وبسعر عادل وشفاف.
+        <h2 class="card-heading" id="clientHead">طلب ونش إنقاذ (عربيتك عطلانة؟)</h2>
+        <p class="card-body-text" id="clientDesc">
+          حدد موقعك المباشر وشاهد الأوناش القريبة منك على الخريطة لحظياً. وصول فوري خلال 10-15 دقيقة، بدون تحميل برامج، وبأسعار معقولة وعادلة بدون استغلال.
         </p>
       </div>
-      <div class="card-btn btn-lime" id="clientCardBtn">
-        اطلب ونش الآن (خريطة مباشرة) &larr;
+      <div class="card-action-btn btn-green-main" id="clientBtn">
+        احصلوا على ونش الآن (خريطة مباشرة) &larr;
       </div>
     </a>
 
-    <!-- Driver Partner Card -->
-    <a href="/driver.html" class="portal-card driver">
+    <!-- Card 2: Driver Partner -->
+    <a href="/driver.html" class="card-item">
       <div>
-        <div class="card-top">
-          <div class="card-icon">🚚</div>
-          <div class="card-arrow">&larr;</div>
+        <div class="card-badge-row">
+          <div class="card-emoji">🚚</div>
+          <div class="card-arrow-circle">&larr;</div>
         </div>
-        <h2 class="card-title" id="driverCardTitle">الشريك السائق (أصحاب الأوناش)</h2>
-        <p class="card-desc" id="driverCardDesc">
-          انضم لأسطول WinchGo واستقبل طلبات السيارات العطلانة في محيطك فقط (5 كم). سجل ونشك الآن واحصل على 3 طلبات تجريبية مجاناً!
+        <h2 class="card-heading" id="driverHead">اربحوا مع WinchGo (أصحاب الأوناش)</h2>
+        <p class="card-body-text" id="driverDesc">
+          انضم لشبكة أوناشنا وسجل سيارتك لتستقبل طلبات الإنقاذ في محيط 5 كم فقط من مكانك. بدون اشتراك شهري إلزامي، ومع 3 نقلات تجريبية مجاناً بالكامل للتجربة!
         </p>
       </div>
-      <div class="card-btn btn-white" id="driverCardBtn">
-        بوابة السائق والمحفظة &larr;
+      <div class="card-action-btn btn-dark-main" id="driverBtn">
+        بوابة الشريك السائق والمحفظة &larr;
       </div>
     </a>
-  </main>
+  </section>
 
-  <!-- inDrive Trust & Transparency Stats -->
-  <section class="trust-container">
-    <div class="trust-box">
-      <div>
-        <div class="trust-stat">10 - 15 دقيقة</div>
-        <div class="trust-label" id="statTime">متوسط سرعة وصول الونش</div>
-      </div>
-      <div>
-        <div class="trust-stat">سعر عادل</div>
-        <div class="trust-label" id="statPrice">تسعيرة واضحة بدون استغلال الطوارئ</div>
-      </div>
-      <div>
-        <div class="trust-stat">GPS مباشر</div>
-        <div class="trust-label" id="statTracking">تتبع مسار الونش لحظياً على الخريطة</div>
-      </div>
-      <div>
-        <div class="trust-stat">24 / 7</div>
-        <div class="trust-label" id="statCoverage">تغطية لكافة المحاور والدائري والمحافظات</div>
+  <!-- inDrive Cities & Highways Coverage -->
+  <section class="cities-strip" id="cities">
+    <div class="cities-container">
+      <h3 class="cities-title" id="citiesHeading">المدن والمحاور المغطاة بخدمات WinchGo</h3>
+      <div class="city-chips-grid">
+        <span class="city-chip">📍 القاهرة والجيزة</span>
+        <span class="city-chip">📍 التجمع الخامس ومحور المشير</span>
+        <span class="city-chip">📍 الطريق الدائري والمريوطية</span>
+        <span class="city-chip">📍 ٦ أكتوبر والشيخ زايد ومحور ٢٦ يوليو</span>
+        <span class="city-chip">📍 طريق مصر الإسكندرية الصحراوي</span>
+        <span class="city-chip">📍 الإسكندرية والساحل الشمالي</span>
+        <span class="city-chip">📍 طريق السويس والعين السخنة</span>
+        <span class="city-chip">📍 الإسماعيلية وبورسعيد</span>
       </div>
     </div>
   </section>
 
-  <!-- Footer with Legal & Copyrights -->
-  <footer class="footer">
-    <div class="footer-links">
-      <a href="/sos.html" id="fOrder">طلب ونش</a>
-      <a href="/driver.html" id="fDriver">انضم كشريك سائق</a>
-      <a href="/dashboard.html" id="fFleet">لوحة إدارة الأسطول</a>
+  <!-- inDrive Modern Footer -->
+  <footer class="main-footer">
+    <div class="footer-inner">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <div class="logo-symbol">wG</div>
+        <span style="font-size: 1.6rem; font-weight: 900; color: #fff;">WinchGo</span>
+      </div>
+      <ul class="footer-links-list">
+        <li><a href="/sos.html" id="fLink1">طلب ونش</a></li>
+        <li><a href="/driver.html" id="fLink2">اربح معنا</a></li>
+        <li><a href="/dashboard.html" id="fLink3">لوحة الأسطول</a></li>
+        <li><a href="#cities" id="fLink4">المناطق المغطاة</a></li>
+      </ul>
     </div>
-    <p id="fCopy">جميع الحقوق محفوظة © 2026 لشركة <b>WinchGo Technologies Ltd</b>.</p>
-    <small style="color: #555; display: block; margin-top: 6px;">محمية بموجب قوانين الملكية الفكرية والعلامات التجارية المسجلة.</small>
+    <div class="footer-bottom-row">
+      <p id="fCopy">جميع الحقوق محفوظة © 2026 لشركة <b>WinchGo Technologies Ltd</b>.</p>
+      <span style="color: #888;">محمية بموجب قوانين الملكية الفكرية والعلامات التجارية في مصر والشرق الأوسط.</span>
+    </div>
   </footer>
 
   <script>
@@ -564,56 +638,62 @@
       ar: {
         dir: 'rtl',
         flag: '🇪🇬',
-        langCode: 'Ar',
-        navCta: 'طلب ونش فوري',
-        badge: 'منصة WinchGo الذكية',
-        title: 'تطبيق واحد، إنقاذ فوري على كل الطرق',
-        desc: 'أسرع شبكة أوناش إنقاذ مرخصة في مصر. نحدد موقعك بالـ GPS ونوجه لك أقرب ونش أونلاين في محيطك فوراً بأسعار عادلة وبدون وسيط.',
-        tabHydraulic: 'ونش هيدروليك سريع',
-        tabFork: 'ونش شوكة للجراجات',
-        tabHeavy: 'نقل ثقيل وتريلات',
-        tabSos: 'طوارئ بطارية وكاوتش',
-        clientTitle: 'طلب ونش إنقاذ (عربيتك عطلانة؟)',
-        clientDesc: 'اطلب أقرب ونش لموقعك فوراً بخريطة الـ GPS الحية. وصول سريع خلال 10-15 دقيقة، بدون تحميل برامج، وبسعر عادل وشفاف.',
-        clientBtn: 'اطلب ونش الآن (خريطة مباشرة) ←',
-        driverTitle: 'الشريك السائق (أصحاب الأوناش)',
-        driverDesc: 'انضم لأسطول WinchGo واستقبل طلبات السيارات العطلانة في محيطك فقط (5 كم). سجل ونشك الآن واحصل على 3 طلبات تجريبية مجاناً!',
-        driverBtn: 'بوابة السائق والمحفظة ←',
-        statTime: 'متوسط سرعة وصول الونش',
-        statPrice: 'تسعيرة واضحة بدون استغلال الطوارئ',
-        statTracking: 'تتبع مسار الونش لحظياً على الخريطة',
-        statCoverage: 'تغطية لكافة المحاور والدائري والمحافظات',
-        fOrder: 'طلب ونش',
-        fDriver: 'انضم كشريك سائق',
-        fFleet: 'لوحة إدارة الأسطول',
+        code: 'Ar',
+        navServices: 'خدمات عادلة',
+        navEarn: 'اربحوا مع WinchGo',
+        navFleet: 'لوحة الأسطول',
+        navCities: 'المدن والمحاور',
+        navCta: 'احصلوا على الونش',
+        heroFloatBtn: 'تحقق منها جميعًا ←',
+        tab1: 'ونش هيدروليك سريع',
+        tab2: 'ونش شوكة للجراجات',
+        tab3: 'نقل ثقيل وسفر',
+        tab4: 'طوارئ بطارية وكاوتش',
+        badge: 'تطبيق WinchGo',
+        mainTitle: 'تطبيق واحد، العديد من الخدمات',
+        mainSub: 'طريقة سلسة لحجز ونش الإنقاذ الأقرب إليك على الطرق السريعة وداخل المدن، وفرصة ذهبية للسائقين وأصحاب الأوناش لكسب المال بشروط عادلة ومباشرة.',
+        clientHead: 'طلب ونش إنقاذ (عربيتك عطلانة؟)',
+        clientDesc: 'حدد موقعك المباشر وشاهد الأوناش القريبة منك على الخريطة لحظياً. وصول فوري خلال 10-15 دقيقة، بدون تحميل برامج، وبأسعار معقولة وعادلة بدون استغلال.',
+        clientBtn: 'احصلوا على ونش الآن (خريطة مباشرة) ←',
+        driverHead: 'اربحوا مع WinchGo (أصحاب الأوناش)',
+        driverDesc: 'انضم لشبكة أوناشنا وسجل سيارتك لتستقبل طلبات الإنقاذ في محيط 5 كم فقط من مكانك. بدون اشتراك شهري إلزامي، ومع 3 نقلات تجريبية مجاناً بالكامل للتجربة!',
+        driverBtn: 'بوابة الشريك السائق والمحفظة ←',
+        citiesHeading: 'المدن والمحاور المغطاة بخدمات WinchGo',
+        fLink1: 'طلب ونش',
+        fLink2: 'اربح معنا',
+        fLink3: 'لوحة الأسطول',
+        fLink4: 'المناطق المغطاة',
         fCopy: 'جميع الحقوق محفوظة © 2026 لشركة WinchGo Technologies Ltd.',
         arrow: '←'
       },
       en: {
         dir: 'ltr',
         flag: '🇬🇧',
-        langCode: 'En',
-        navCta: 'Request Tow Now',
-        badge: 'Smart WinchGo Platform',
-        title: 'One Platform, Instant Rescue on Every Highway',
-        desc: 'Egypt’s fastest certified emergency tow network. Real-time GPS location matching you with the nearest active tow truck at fair, upfront rates.',
-        tabHydraulic: 'Hydraulic Flatbed',
-        tabFork: 'Garage Wheel-Lift',
-        tabHeavy: 'Heavy Duty Towing',
-        tabSos: 'Battery & Tire SOS',
-        clientTitle: 'Request Tow Truck (Broken Down?)',
-        clientDesc: 'Dispatch the nearest tow truck with live GPS tracking. Rapid arrival within 10-15 minutes, no app download required, fair pricing.',
-        clientBtn: 'Request Tow Truck (Live Map) →',
-        driverTitle: 'Driver Partner (Winch Owners)',
-        driverDesc: 'Join WinchGo fleet and receive emergency towing jobs exclusively within your 5 km perimeter. Sign up now & get 3 free trial leads!',
-        driverBtn: 'Driver & Wallet Portal →',
-        statTime: 'Average Tow Arrival Time',
-        statPrice: 'Fair Pricing Without Emergency Gouging',
-        statTracking: 'Live GPS Truck Route Tracking',
-        statCoverage: '24/7 Coverage Across All Highways & Cities',
-        fOrder: 'Request Tow',
-        fDriver: 'Join as Driver Partner',
-        fFleet: 'Fleet Management Dashboard',
+        code: 'En',
+        navServices: 'Fair Services',
+        navEarn: 'Earn with WinchGo',
+        navFleet: 'Fleet Dashboard',
+        navCities: 'Cities & Highways',
+        navCta: 'Get Tow Truck',
+        heroFloatBtn: 'Explore all services →',
+        tab1: 'Hydraulic Flatbed',
+        tab2: 'Garage Wheel-Lift',
+        tab3: 'Heavy Duty Towing',
+        tab4: 'Battery & Tire SOS',
+        badge: 'WinchGo App',
+        mainTitle: 'One App, Multiple Services',
+        mainSub: 'A seamless way to book the nearest rescue tow truck across all highways and cities, and a proven opportunity for tow truck drivers to earn money on fair, direct terms.',
+        clientHead: 'Request Rescue Tow Truck (Broken Down?)',
+        clientDesc: 'Pinpoint your exact location and see nearby active tow trucks on the live map. Fast arrival within 10-15 minutes, no app download required, fair and transparent pricing.',
+        clientBtn: 'Get a Tow Truck Now (Live Map) →',
+        driverHead: 'Earn with WinchGo (Tow Truck Owners)',
+        driverDesc: 'Join our fleet and receive rescue orders strictly within your 5 km perimeter. No mandatory monthly fee, plus 3 free trial leads to test and start earning!',
+        driverBtn: 'Driver Partner & Wallet Portal →',
+        citiesHeading: 'Cities & Highways Covered by WinchGo',
+        fLink1: 'Request Tow',
+        fLink2: 'Earn with Us',
+        fLink3: 'Fleet Dashboard',
+        fLink4: 'Covered Zones',
         fCopy: 'All rights reserved © 2026 WinchGo Technologies Ltd.',
         arrow: '→'
       }
@@ -631,41 +711,45 @@
       document.documentElement.dir = t.dir;
 
       document.getElementById('langFlag').textContent = t.flag;
-      document.getElementById('langText').textContent = t.langCode;
-      document.getElementById('navOrderBtn').textContent = t.navCta;
+      document.getElementById('langCode').textContent = t.code;
+
+      document.getElementById('navServices').textContent = t.navServices;
+      document.getElementById('navEarn').textContent = t.navEarn;
+      document.getElementById('navFleet').textContent = t.navFleet;
+      document.getElementById('navCities').textContent = t.navCities;
+      document.getElementById('navCtaBtn').textContent = t.navCta;
+
+      document.getElementById('heroFloatBtn').textContent = t.heroFloatBtn;
+      document.getElementById('tab1').textContent = t.tab1;
+      document.getElementById('tab2').textContent = t.tab2;
+      document.getElementById('tab3').textContent = t.tab3;
+      document.getElementById('tab4').textContent = t.tab4;
 
       document.getElementById('badgePill').textContent = t.badge;
-      document.getElementById('headlineMain').textContent = t.title;
-      document.getElementById('headlineSub').textContent = t.desc;
+      document.getElementById('mainTitle').textContent = t.mainTitle;
+      document.getElementById('mainSub').textContent = t.mainSub;
 
-      document.getElementById('tabHydraulic').textContent = t.tabHydraulic;
-      document.getElementById('tabFork').textContent = t.tabFork;
-      document.getElementById('tabHeavy').textContent = t.tabHeavy;
-      document.getElementById('tabSos').textContent = t.tabSos;
+      document.getElementById('clientHead').textContent = t.clientHead;
+      document.getElementById('clientDesc').textContent = t.clientDesc;
+      document.getElementById('clientBtn').textContent = t.clientBtn;
 
-      document.getElementById('clientCardTitle').textContent = t.clientTitle;
-      document.getElementById('clientCardDesc').textContent = t.clientDesc;
-      document.getElementById('clientCardBtn').textContent = t.clientBtn;
+      document.getElementById('driverHead').textContent = t.driverHead;
+      document.getElementById('driverDesc').textContent = t.driverDesc;
+      document.getElementById('driverBtn').textContent = t.driverBtn;
 
-      document.getElementById('driverCardTitle').textContent = t.driverTitle;
-      document.getElementById('driverCardDesc').textContent = t.driverDesc;
-      document.getElementById('driverCardBtn').textContent = t.driverBtn;
+      document.getElementById('citiesHeading').textContent = t.citiesHeading;
 
-      document.getElementById('statTime').textContent = t.statTime;
-      document.getElementById('statPrice').textContent = t.statPrice;
-      document.getElementById('statTracking').textContent = t.statTracking;
-      document.getElementById('statCoverage').textContent = t.statCoverage;
-
-      document.getElementById('fOrder').textContent = t.fOrder;
-      document.getElementById('fDriver').textContent = t.fDriver;
-      document.getElementById('fFleet').textContent = t.fFleet;
+      document.getElementById('fLink1').textContent = t.fLink1;
+      document.getElementById('fLink2').textContent = t.fLink2;
+      document.getElementById('fLink3').textContent = t.fLink3;
+      document.getElementById('fLink4').textContent = t.fLink4;
       document.getElementById('fCopy').innerHTML = t.fCopy;
 
-      document.querySelectorAll('.card-arrow').forEach(el => el.textContent = t.arrow);
+      document.querySelectorAll('.card-arrow-circle').forEach(el => el.textContent = t.arrow);
     }
 
-    function selectTab(btn, service) {
-      document.querySelectorAll('.service-tab').forEach(b => b.classList.remove('active'));
+    function setServiceTab(btn) {
+      document.querySelectorAll('.h-tab').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
     }
 
