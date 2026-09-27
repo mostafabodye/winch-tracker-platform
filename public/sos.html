@@ -2,88 +2,180 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <title>طوارئ ونش إنقاذ سيارات | أقرب ونش في دقائق</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>WinchGo SOS | طوارئ ونش إنقاذ سيارات</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  
+  <!-- Leaflet CSS for Uber Map Experience -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
   <style>
+    :root {
+      --bg-dark: #000000;
+      --card-bg: #111111;
+      --accent-red: #ef4444;
+      --accent-green: #22c55e;
+      --accent-yellow: #f59e0b;
+      --border-color: #262626;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Cairo', sans-serif;
+      font-family: 'Cairo', 'Inter', sans-serif;
     }
+
     body {
-      background: #0f172a;
-      color: #f8fafc;
-      min-height: 100vh;
+      background: var(--bg-dark);
+      color: #fff;
+      height: 100vh;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 16px;
+      overflow: hidden;
     }
-    .sos-container {
-      max-width: 480px;
-      width: 100%;
+
+    /* Top Bar */
+    .topbar {
       display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .emergency-header {
-      text-align: center;
-      padding: 16px 0;
-    }
-    .emergency-badge {
-      display: inline-flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 6px;
-      background: rgba(239, 68, 68, 0.2);
-      color: #ef4444;
-      border: 1px solid rgba(239, 68, 68, 0.4);
+      padding: 12px 20px;
+      background: #000;
+      border-bottom: 1px solid var(--border-color);
+      z-index: 1000;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 900;
+      font-size: 1.25rem;
+    }
+    .brand span {
+      color: var(--accent-yellow);
+    }
+
+    .lang-btn {
+      background: #1e1e1e;
+      border: 1px solid var(--border-color);
+      color: #fff;
       padding: 6px 14px;
       border-radius: 9999px;
+      font-size: 0.8rem;
       font-weight: 700;
-      font-size: 0.85rem;
-      margin-bottom: 12px;
+      cursor: pointer;
     }
-    h1 {
-      font-size: 1.8rem;
-      font-weight: 900;
-      line-height: 1.3;
-      margin-bottom: 8px;
+
+    /* Map Area (Uber Style) */
+    .map-container {
+      flex: 1;
+      position: relative;
     }
-    p.sub {
-      color: #94a3b8;
-      font-size: 0.95rem;
+
+    #customerMap {
+      width: 100%;
+      height: 100%;
+      background: #111;
     }
-    .action-card {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+
+    .gps-recenter-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: #fff;
+      color: #000;
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      font-size: 1.25rem;
+      cursor: pointer;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .form-group {
+
+    /* Bottom Bottom-Sheet Card (Uber Ride Request) */
+    .request-sheet {
+      background: #0f0f0f;
+      border-top: 1px solid #333;
+      border-radius: 24px 24px 0 0;
+      padding: 20px 24px;
+      z-index: 1000;
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.7);
+      max-height: 55vh;
+      overflow-y: auto;
+    }
+
+    .sheet-pill {
+      width: 40px;
+      height: 4px;
+      background: #444;
+      border-radius: 9999px;
+      margin: 0 auto 14px;
+    }
+
+    .eta-fare-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 14px;
+      padding: 12px 16px;
       margin-bottom: 16px;
     }
-    label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: #cbd5e1;
-      margin-bottom: 6px;
+
+    .eta-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
+
+    .eta-time {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--accent-green);
+    }
+
+    .fare-box {
+      text-align: left;
+    }
+    html[dir="rtl"] .fare-box {
+      text-align: right;
+    }
+
+    .fare-val {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--accent-yellow);
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
     input, select {
-      width: 100%;
-      background: #0f172a;
-      border: 1px solid #334155;
+      flex: 1;
+      background: #1e1e1e;
+      border: 1px solid #333;
       color: #fff;
       padding: 12px 14px;
-      border-radius: 10px;
+      border-radius: 12px;
       font-family: inherit;
       font-size: 0.95rem;
     }
+
     .btn-sos {
       width: 100%;
       background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
@@ -98,240 +190,352 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      box-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
-      transition: all 0.2s;
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.4);
+      margin-top: 4px;
     }
+
     .btn-sos:hover {
-      transform: scale(1.02);
-      box-shadow: 0 0 35px rgba(239, 68, 68, 0.7);
+      box-shadow: 0 0 35px rgba(239, 68, 68, 0.6);
     }
-    .location-detect-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(56, 189, 248, 0.1);
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-size: 0.85rem;
-      color: #38bdf8;
-      margin-bottom: 16px;
-    }
-    /* Matched Driver Result Card */
-    .matched-card {
-      background: #1e293b;
-      border: 2px solid #22c55e;
-      border-radius: 20px;
-      padding: 24px;
-      text-align: center;
-      animation: fadeIn 0.4s ease;
+
+    /* Result Matched Driver Screen */
+    .matched-screen {
       display: none;
+      text-align: center;
+      padding: 10px 0;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .matched-icon {
-      font-size: 3rem;
+
+    .matched-badge {
+      background: rgba(34, 197, 94, 0.2);
+      color: var(--accent-green);
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      padding: 4px 14px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: inline-block;
       margin-bottom: 10px;
     }
-    .matched-title {
-      font-size: 1.3rem;
-      color: #22c55e;
-      font-weight: 800;
-      margin-bottom: 6px;
-    }
-    .driver-details-box {
-      background: #0f172a;
-      border-radius: 12px;
+
+    .driver-box {
+      background: #1a1a1a;
+      border-radius: 16px;
       padding: 16px;
+      margin: 12px 0 16px;
       text-align: right;
-      margin: 16px 0;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       font-size: 0.95rem;
     }
+    html[dir="ltr"] .driver-box {
+      text-align: left;
+    }
+
     .call-btn {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      background: #22c55e;
-      color: #0f172a;
+      background: var(--accent-green);
+      color: #000;
       text-decoration: none;
       padding: 14px;
       border-radius: 12px;
       font-weight: 800;
       font-size: 1.1rem;
     }
-    .trust-strip {
-      display: flex;
-      justify-content: space-around;
-      font-size: 0.8rem;
-      color: #94a3b8;
+
+    .copyright-strip {
       text-align: center;
-      margin-top: 10px;
+      font-size: 0.7rem;
+      color: #555;
+      margin-top: 12px;
+    }
+
+    /* Leaflet marker animations */
+    .customer-pulse {
+      background: #3b82f6;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      box-shadow: 0 0 20px #3b82f6;
+    }
+
+    .winch-map-icon {
+      background: #000;
+      border: 2px solid var(--accent-yellow);
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      box-shadow: 0 0 12px rgba(245, 158, 11, 0.5);
     }
   </style>
 </head>
 <body>
-  <div class="sos-container">
-    <header class="emergency-header">
-      <div class="emergency-badge">🚨 خدمة الإنقاذ السريع 24/7</div>
-      <h1>عربيتك عطلانة؟ ونش الإنقاذ عندك في دقائق</h1>
-      <p class="sub">نحدد موقعك تلقائياً ونوجه أقرب ونش أونلاين على الطريق الآن</p>
-    </header>
+  <!-- Topbar -->
+  <header class="topbar">
+    <a href="/" class="brand">
+      <span>🚚 Winch</span>Go
+    </a>
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()">English</button>
+  </header>
 
-    <!-- Request Form -->
-    <div class="action-card" id="requestCard">
-      <div class="location-detect-row" id="gpsRow">
-        <span>📍</span>
-        <span id="gpsText">جاري تحديد موقعك التلقائي عبر الـ GPS...</span>
+  <!-- Interactive Map (Uber Style) -->
+  <div class="map-container">
+    <div id="customerMap"></div>
+    <button class="gps-recenter-btn" onclick="recenterMap()" title="موقعي">📍</button>
+  </div>
+
+  <!-- Bottom Request Sheet -->
+  <div class="request-sheet">
+    <div class="sheet-pill"></div>
+
+    <!-- Active Request View -->
+    <div id="bookingFormView">
+      <div class="eta-fare-bar">
+        <div class="eta-box">
+          <span style="font-size: 1.4rem;">🚚</span>
+          <div>
+            <div style="font-size: 0.75rem; color: #888;" id="labelEta">أقرب ونش لك:</div>
+            <div class="eta-time" id="valEta">5 - 10 دقائق</div>
+          </div>
+        </div>
+        <div class="fare-box">
+          <div style="font-size: 0.75rem; color: #888;" id="labelFare">التكلفة التقديرية:</div>
+          <div class="fare-val" id="valFare">350 - 450 ج.م</div>
+        </div>
       </div>
 
-      <div class="form-group">
-        <label>رقم موبايلك (للتواصل مع الونش):</label>
-        <input type="tel" id="clientPhone" placeholder="مثال: 01012345678" required>
+      <div class="input-row">
+        <input type="tel" id="custPhone" placeholder="رقم موبايلك (للتواصل السريع)" required>
+        <input type="text" id="custCar" placeholder="نوع السيارة (مثال: كيا سيراتو)">
       </div>
 
-      <div class="form-group">
-        <label>اسمك الكريم:</label>
-        <input type="text" id="clientName" placeholder="مثال: محمد علي" value="عميل طوارئ">
-      </div>
-
-      <div class="form-group">
-        <label>نوع السيارة ومكان العطل:</label>
-        <select id="clientZone">
-          <option value="tagamoa">التجمع الخامس ومحور المشير</option>
-          <option value="maadi">الطريق الدائري والمعادي</option>
-          <option value="october">٦ أكتوبر والشيخ زايد ومحور ٢٦ يوليو</option>
-          <option value="heliopolis">مصر الجديدة ومدينة نصر وطريق السويس</option>
-          <option value="giza">الجيزة والهرم وميدان الرماية</option>
-        </select>
-      </div>
-
-      <button class="btn-sos" id="btnRequestWinch">
+      <button class="btn-sos" id="btnRequestNow">
         <span>🚨</span>
-        <span>اطلب أقرب ونش لموقعي الآن</span>
+        <span id="btnRequestLabel">اطلب أقرب ونش إنقاذ لموقعي الآن</span>
       </button>
 
-      <div class="trust-strip">
-        <span>⚡ وصول خلال 10-20 دقيقة</span>
-        <span>🛡️ ونش هيدروليك مأمن</span>
-        <span>💵 أفضل سعر ثابت للنقلة</span>
+      <div class="copyright-strip" id="copyrightLabel">
+        © 2026 WinchGo Technologies Ltd. جميع الحقوق محفوظة
       </div>
     </div>
 
-    <!-- Result / Confirmation Card -->
-    <div class="matched-card" id="matchedCard">
-      <div class="matched-icon">🚚💨</div>
-      <h2 class="matched-title">تم توجيه الونش لموقعك بنجاح!</h2>
-      <p style="color: #cbd5e1; font-size: 0.9rem;">الونش تحرك الآن وهو في طريقه إليك</p>
+    <!-- Dispatched View (When Driver Accepts) -->
+    <div class="matched-screen" id="matchedScreen">
+      <div class="matched-badge" id="labelDispatched">✅ تم توجيه الونش لموقعك بنجاح!</div>
+      <p style="color: #bbb; font-size: 0.85rem;" id="labelTruckEnRoute">الونش تحرك وهو في طريقه إليك الآن</p>
 
-      <div class="driver-details-box">
-        <div>اسم السائق: <b id="matchedDriverName" style="color: #fff;">--</b></div>
-        <div>رقم اللوحة: <b id="matchedDriverPlate" style="color: #facc15;">--</b></div>
-        <div>المسافة عنك: <b id="matchedDistance" style="color: #38bdf8;">--</b></div>
-        <div>الوقت المقدر للوصول: <b id="matchedETA" style="color: #22c55e;">--</b></div>
+      <div class="driver-box">
+        <div><span id="dNameLabel">كابتن الونش:</span> <b id="driverName" style="color: #fff;">--</b></div>
+        <div><span id="dPlateLabel">رقم اللوحة:</span> <b id="driverPlate" style="color: var(--accent-yellow);">--</b></div>
+        <div><span id="dDistLabel">المسافة الحالية:</span> <b id="driverDist" style="color: #38bdf8;">--</b></div>
+        <div><span id="dEtaLabel">وقت الوصول المقدر:</span> <b id="driverEta" style="color: var(--accent-green);">--</b></div>
       </div>
 
-      <a href="#" class="call-btn" id="callDriverLink">
+      <a href="#" class="call-btn" id="driverPhoneLink">
         <span>📞</span>
-        <span>اتصال مباشر بالسائق الآن</span>
+        <span id="callLabel">اتصال مباشر بالسائق الآن</span>
       </a>
 
-      <p style="color: #64748b; font-size: 0.75rem; margin-top: 12px;">
-        تم تأكيد الطلب وحفظ موقعك الجغرافي لدى السائق.
-      </p>
+      <div class="copyright-strip">
+        © 2026 WinchGo Technologies Ltd.
+      </div>
     </div>
   </div>
 
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script>
-    let userLat = 30.0131;
-    let userLng = 31.4289;
+    let map;
+    let customerMarker;
+    let customerLat = 30.0131;
+    let customerLng = 31.4289;
+    let currentLang = localStorage.getItem('winch_lang') || 'ar';
+    const winchMarkers = [];
 
-    // Auto detect user GPS if allowed
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          userLat = pos.coords.latitude;
-          userLng = pos.coords.longitude;
-          document.getElementById('gpsText').textContent = '✅ تم تحديد موقعك الجغرافي بنجاح وبدقة عالية.';
-        },
-        (err) => {
-          document.getElementById('gpsText').textContent = '📍 تم تحديد المنطقة التقريبية (يمكنك تأكيدها من القائمة).';
-        }
-      );
-    }
-
-    // Zone coordinates fallback
-    const zoneCoords = {
-      tagamoa: { lat: 30.0131, lng: 31.4289 },
-      maadi: { lat: 29.9602, lng: 31.2569 },
-      october: { lat: 30.0074, lng: 30.9733 },
-      heliopolis: { lat: 30.0871, lng: 31.3325 },
-      giza: { lat: 29.9870, lng: 31.1500 }
+    const i18n = {
+      ar: {
+        dir: 'rtl',
+        langBtn: 'English',
+        labelEta: 'أقرب ونش لك:',
+        valEta: '5 - 10 دقائق',
+        labelFare: 'التكلفة التقديرية:',
+        valFare: '350 - 450 ج.م',
+        phPhone: 'رقم موبايلك (للتواصل السريع)',
+        phCar: 'نوع السيارة (مثال: كيا سيراتو)',
+        btnRequest: 'اطلب أقرب ونش إنقاذ لموقعي الآن',
+        copyright: '© 2026 WinchGo Technologies Ltd. جميع الحقوق محفوظة',
+        labelDispatched: '✅ تم توجيه الونش لموقعك بنجاح!',
+        labelTruckEnRoute: 'الونش تحرك وهو في طريقه إليك الآن',
+        dName: 'كابتن الونش:',
+        dPlate: 'رقم اللوحة:',
+        dDist: 'المسافة الحالية:',
+        dEta: 'وقت الوصول المقدر:',
+        call: 'اتصال مباشر بالسائق الآن'
+      },
+      en: {
+        dir: 'ltr',
+        langBtn: 'العربية',
+        labelEta: 'Nearest Tow Truck:',
+        valEta: '5 - 10 Minutes',
+        labelFare: 'Estimated Fare:',
+        valFare: '350 - 450 EGP',
+        phPhone: 'Your Phone Number (For Dispatch)',
+        phCar: 'Vehicle Model (e.g. Kia Cerato)',
+        btnRequest: 'Request Nearest Rescue Tow Truck Now',
+        copyright: '© 2026 WinchGo Technologies Ltd. All rights reserved',
+        labelDispatched: '✅ Tow Truck Successfully Dispatched!',
+        labelTruckEnRoute: 'The driver is en route to your exact location',
+        dName: 'Driver Name:',
+        dPlate: 'Truck Plate:',
+        dDist: 'Distance:',
+        dEta: 'Estimated Arrival:',
+        call: 'Call Driver Directly Now'
+      }
     };
 
-    document.getElementById('btnRequestWinch').onclick = () => {
-      const phone = document.getElementById('clientPhone').value.trim();
-      const name = document.getElementById('clientName').value.trim() || 'عميل الطريق';
-      const zone = document.getElementById('clientZone').value;
+    function initMap() {
+      map = L.map('customerMap', { zoomControl: false }).setView([customerLat, customerLng], 13);
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; CARTO &copy; OpenStreetMap',
+        maxZoom: 19
+      }).addTo(map);
+
+      // Customer Beacon
+      const pulseIcon = L.divIcon({
+        className: 'customer-pulse',
+        iconSize: [22, 22],
+        iconAnchor: [11, 11]
+      });
+      customerMarker = L.marker([customerLat, customerLng], { icon: pulseIcon }).addTo(map);
+
+      // Load active winches nearby on map
+      fetch('/api/drivers')
+        .then(res => res.json())
+        .then(data => {
+          if (data.drivers) {
+            data.drivers.forEach(d => {
+              if (d.isOnline && d.lat && d.lng) {
+                const icon = L.divIcon({
+                  className: 'winch-map-icon',
+                  html: '🚚',
+                  iconSize: [32, 32],
+                  iconAnchor: [16, 16]
+                });
+                const m = L.marker([d.lat, d.lng], { icon }).addTo(map);
+                winchMarkers.push(m);
+              }
+            });
+          }
+        });
+
+      // Auto GPS
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          customerLat = pos.coords.latitude;
+          customerLng = pos.coords.longitude;
+          customerMarker.setLatLng([customerLat, customerLng]);
+          map.setView([customerLat, customerLng], 14);
+        });
+      }
+    }
+
+    function recenterMap() {
+      map.setView([customerLat, customerLng], 14);
+    }
+
+    function toggleLang() {
+      currentLang = currentLang === 'ar' ? 'en' : 'ar';
+      localStorage.setItem('winch_lang', currentLang);
+      applyLang();
+    }
+
+    function applyLang() {
+      const t = i18n[currentLang];
+      document.documentElement.lang = currentLang;
+      document.documentElement.dir = t.dir;
+
+      document.getElementById('langBtn').textContent = t.langBtn;
+      document.getElementById('labelEta').textContent = t.labelEta;
+      document.getElementById('valEta').textContent = t.valEta;
+      document.getElementById('labelFare').textContent = t.labelFare;
+      document.getElementById('valFare').textContent = t.valFare;
+      document.getElementById('custPhone').placeholder = t.phPhone;
+      document.getElementById('custCar').placeholder = t.phCar;
+      document.getElementById('btnRequestLabel').textContent = t.btnRequest;
+      document.getElementById('copyrightLabel').textContent = t.copyright;
+
+      document.getElementById('labelDispatched').textContent = t.labelDispatched;
+      document.getElementById('labelTruckEnRoute').textContent = t.labelTruckEnRoute;
+      document.getElementById('dNameLabel').textContent = t.dName;
+      document.getElementById('dPlateLabel').textContent = t.dPlate;
+      document.getElementById('dDistLabel').textContent = t.dDist;
+      document.getElementById('dEtaLabel').textContent = t.dEta;
+      document.getElementById('callLabel').textContent = t.call;
+    }
+
+    // Submit Request
+    document.getElementById('btnRequestNow').onclick = () => {
+      const phone = document.getElementById('custPhone').value.trim();
+      const car = document.getElementById('custCar').value.trim() || 'سيارة ملاكي';
 
       if (!phone) {
-        alert('من فضلك اكتب رقم تليفونك ليتواصل معك سائق الونش فوراً.');
-        document.getElementById('clientPhone').focus();
+        alert(currentLang === 'ar' ? 'من فضلك اكتب رقم هاتفك للتواصل السريع.' : 'Please enter your phone number.');
+        document.getElementById('custPhone').focus();
         return;
       }
 
-      // If coords not updated by GPS, use zone default
-      const coords = zoneCoords[zone] || { lat: 30.0444, lng: 31.2357 };
-      const finalLat = userLat || coords.lat;
-      const finalLng = userLng || coords.lng;
-
-      const btn = document.getElementById('btnRequestWinch');
-      btn.innerHTML = 'جاري البحث عن أقرب ونش أونلاين... ⏳';
+      const btn = document.getElementById('btnRequestNow');
       btn.disabled = true;
+      btn.innerHTML = `<span>⏳</span><span>${currentLang === 'ar' ? 'جاري توجيه أقرب ونش...' : 'Locating closest tow truck...'}</span>`;
 
       fetch('/api/dispatch/request', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          customerName: name,
+          customerName: 'عميل WinchGo',
           customerPhone: phone,
-          customerLat: finalLat,
-          customerLng: finalLng,
-          vehicleType: 'سيارة ملاكي',
-          notes: 'طلب عاجل من صفحة الطوارئ'
+          vehicleType: car,
+          customerLat,
+          customerLng,
+          notes: 'طلب فوري من خريطة العميل'
         })
       })
       .then(res => res.json())
       .then(data => {
         if (data.success && data.lead && data.lead.bestMatch) {
           const match = data.lead.bestMatch;
-          document.getElementById('requestCard').style.display = 'none';
-          document.getElementById('matchedCard').style.display = 'block';
+          document.getElementById('bookingFormView').style.display = 'none';
+          document.getElementById('matchedScreen').style.display = 'block';
 
-          document.getElementById('matchedDriverName').textContent = match.driverName;
-          document.getElementById('matchedDriverPlate').textContent = match.driverPlate || 'ونش معتمد';
-          document.getElementById('matchedDistance').textContent = `${match.distance} كم`;
-          document.getElementById('matchedETA').textContent = `${match.estimatedTime} دقيقة`;
+          document.getElementById('driverName').textContent = match.driverName;
+          document.getElementById('driverPlate').textContent = match.driverPlate || '---';
+          document.getElementById('driverDist').textContent = `${match.distance} ${currentLang === 'ar' ? 'كم' : 'KM'}`;
+          document.getElementById('driverEta').textContent = `${match.estimatedTime} ${currentLang === 'ar' ? 'دقائق' : 'Mins'}`;
 
-          const callLink = document.getElementById('callDriverLink');
+          const callLink = document.getElementById('driverPhoneLink');
           callLink.href = `tel:${match.driverPhone || '01012345678'}`;
-          callLink.innerHTML = `<span>📞</span><span>اتصال بالسائق (${match.driverPhone})</span>`;
+          callLink.querySelector('#callLabel').textContent = `${i18n[currentLang].call} (${match.driverPhone})`;
         } else {
-          alert('عذراً، لا يوجد ونش متصل حالياً في هذا النطاق، يرجى الاتصال بالخط الساخن.');
-          btn.innerHTML = '🚨 اطلب أقرب ونش لموقعي الآن';
+          alert(currentLang === 'ar' ? 'لا يوجد ونش متصل في هذا النطاق حالياً.' : 'No active tow truck currently available in this zone.');
           btn.disabled = false;
+          applyLang();
         }
-      })
-      .catch(err => {
-        alert('حدث خطأ في الاتصال، يرجى المحاولة ثانية.');
-        btn.disabled = false;
       });
     };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initMap();
+      applyLang();
+    });
   </script>
 </body>
 </html>
