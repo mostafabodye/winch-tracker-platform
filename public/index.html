@@ -324,6 +324,60 @@
       line-height: 1.6;
     }
 
+    /* Hero Winch Image Banner */
+    .hero-image-wrapper {
+      max-width: 1050px;
+      margin: 0 auto 36px;
+      padding: 0 24px;
+      position: relative;
+    }
+
+    .hero-winch-img {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 28px;
+      border: 1px solid #333;
+      box-shadow: 0 25px 60px -15px rgba(245, 158, 11, 0.25);
+      display: block;
+    }
+
+    .hero-image-overlay {
+      position: absolute;
+      bottom: 24px;
+      right: 44px;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      padding: 8px 20px;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: #facc15;
+    }
+
+    html[dir="ltr"] .hero-image-overlay {
+      right: auto;
+      left: 44px;
+    }
+
+    @media (max-width: 640px) {
+      .hero-winch-img {
+        height: 220px;
+        border-radius: 18px;
+      }
+      .hero-image-overlay {
+        bottom: 12px;
+        right: 32px;
+        font-size: 0.75rem;
+        padding: 4px 12px;
+      }
+      html[dir="ltr"] .hero-image-overlay {
+        left: 32px;
+        right: auto;
+      }
+    }
+
     @media (max-width: 640px) {
       .navbar {
         padding: 16px 20px;
@@ -361,6 +415,14 @@
       نربط السيارات العطلانة على الطريق بأقرب ونش إنقاذ متاح في ثوانٍ معدودة عبر الخرائط المباشرة وتكنولوجيا الـ GPS الفورية.
     </p>
   </section>
+
+  <!-- Hero Winch Showcase Image (Uber Style) -->
+  <div class="hero-image-wrapper">
+    <img src="/images/winch_hero_banner.jpg" alt="WinchGo Heavy Duty Tow Truck" class="hero-winch-img">
+    <div class="hero-image-overlay">
+      <span id="heroImageBadge">🚚 أسطول أوناش الإنقاذ الهيدروليكية المجهزة 24/7</span>
+    </div>
+  </div>
 
   <!-- Dual Portals (Customer vs Driver Partner - Uber Style) -->
   <main class="portals-container">
@@ -442,6 +504,7 @@
         heroBadge: '⚡ شبكة أوناش الإنقاذ الأسرع في مصر',
         heroTitle: 'منظومة الإنقاذ والتوجيه الذكي للأوناش',
         heroDesc: 'نربط السيارات العطلانة على الطريق بأقرب ونش إنقاذ متاح في ثوانٍ معدودة عبر الخرائط المباشرة وتكنولوجيا الـ GPS الفورية.',
+        heroImageBadge: '🚚 أسطول أوناش الإنقاذ الهيدروليكية المجهزة 24/7',
         clientPortalTitle: 'العميل (عربيتك عطلانة؟)',
         clientPortalDesc: 'اطلب أقرب ونش إنقاذ لموقعك فوراً بالخريطة الحية. وصول سريع خلال 10-15 دقيقة، بدون تحميل برامج، مع أفضل سعر ثابت.',
         clientPortalBtn: '🚨 اطلب ونش إنقاذ الآن (SOS)',
@@ -464,6 +527,7 @@
         heroBadge: '⚡ Egypt’s Fastest Emergency Towing Network',
         heroTitle: 'Smart On-Demand Tow Truck & Rescue Platform',
         heroDesc: 'Connecting broken-down motorists with the nearest tow truck in seconds using real-time GPS and smart geofence dispatching.',
+        heroImageBadge: '🚚 24/7 Heavy-Duty Hydraulic Tow Truck Fleet',
         clientPortalTitle: 'Rider / Motorist (Broken Down?)',
         clientPortalDesc: 'Request the nearest tow truck with live GPS tracking. Rapid arrival within 10-15 minutes, no app download required, guaranteed fair rates.',
         clientPortalBtn: '🚨 Request Rescue Tow Truck Now (SOS)',
@@ -497,6 +561,9 @@
       document.getElementById('heroBadge').textContent = t.heroBadge;
       document.getElementById('heroTitle').textContent = t.heroTitle;
       document.getElementById('heroDesc').textContent = t.heroDesc;
+      if (document.getElementById('heroImageBadge')) {
+        document.getElementById('heroImageBadge').textContent = t.heroImageBadge;
+      }
 
       document.getElementById('clientPortalTitle').textContent = t.clientPortalTitle;
       document.getElementById('clientPortalDesc').textContent = t.clientPortalDesc;
